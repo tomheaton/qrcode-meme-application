@@ -1,0 +1,20 @@
+{
+  "name": "qrcode-server",
+  "version": "1.0.0",
+  "private": true,
+  "keywords": [],
+  "author": "Thomas Heaton",
+  "license": "MIT",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "lodash": "^4.17.15"
+  }
+}

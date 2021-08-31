@@ -1,0 +1,102 @@
+$theme-colors: (
+        "success": #3c6496,
+        "danger": #960a26,
+);
+
+@import "../../node_modules/bootstrap/scss/bootstrap";
+
+h1, h2, h3, h4, h5, b, p {
+  font-family: "Trebuchet MS", sans-serif;
+}
+
+h5 {
+  padding: 5px;
+  color: #ffffff;
+}
+
+.h7 {
+  color: #ffffff;
+  font-family: "Trebuchet MS", sans-serif;
+  font-size: 20px;
+}
+
+.h6 {
+  color: #ffffff;
+  font-family: "Trebuchet MS", sans-serif;
+  font-size: 16px;
+}
+
+.progress {
+  border-radius: 0;
+}
+
+footer {
+  background: #3C6496;
+  width: 100%;
+}
+
+body {
+  height: 100%;
+  background: #c7d4e2;
+  overflow-x: hidden;
+}
+
+header {
+  width: 100%;
+  background: #c7d4e2;
+}
+
+.progress-bar {
+  border-radius: 0;
+}
+
+.form-control {
+  border-radius: 0;
+}
+
+.custom-select {
+  border-radius: 0;
+  width: 100%;
+  background: #E9ECEF;
+}
+
+.myContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn {
+  border-radius: 0;
+}
+
+input[type=text], input[type=email] {
+  background: #E9ECEF;
+  font-family: "Trebuchet MS", sans-serif
+}
+
+option {
+  background-color: #E9ECEF;
+}
+
+input[type=checkbox] {
+  width: 25px;
+  height: 25px;
+}
+
+.custom-dialog {
+  width: 90%;
+  text-align: center;
+}
+
+input:valid, select:valid {
+  border-color: #3c6496;
+}
+
+input:invalid, select:invalid {
+  //border-color: red;
+}
+
+.creatorTag {
+  text-align: center;
+  color: gray;
+}
