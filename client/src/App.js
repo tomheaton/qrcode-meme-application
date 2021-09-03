@@ -1,23 +1,22 @@
-import React from 'react';
-import './styles/styles.scss';
-import { Row, Col } from 'react-bootstrap';
-import FormComponent from "./components/FormComponent";
+import logo from './logo.svg';
 
-function App() {
+const App = () => {
   return (
-    <div>
-      <br/>
-      <br/>
-      <br/>
-      <br/>
-      <Row>
-        <Col md={12}>
-      <FormComponent/>
-        </Col>
-      </Row>
-      {/*<footer>*/}
-      {/*  <h5 className={"text-center"}>Tom Heaton | 2020</h5>*/}
-      {/*</footer>*/}
+    <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <p>
+          Edit <code>src/App.js</code> and save to reload.
+        </p>
+        <a
+          className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn React
+        </a>
+      </header>
     </div>
   );
 }

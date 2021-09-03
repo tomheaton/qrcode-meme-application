@@ -1,15 +1,13 @@
+require("dotenv").config();
 const express = require('express');
-const cors = require('cors');
-const bodyParser = require('body-parser');
-const fs = require("fs");
 const lodash = require("lodash");
+const cors = require('cors');
+const fs = require("fs");
 
 const app = express();
-const port = 5000;
-
-app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+const port = process.env.PORT || 5000;
+app.use(express.json());
+app.use(cors.config({ origin: "http://localhost:3000", credentials: true }));
 
 const restoreDefaults = async () => {
   fs.readFile("../defaults.json", 'utf8', (err, data) => {
@@ -26,7 +24,7 @@ const removeEntry = async (name, index) => {
 
     let memeData = JSON.parse(data);
     if (index > -1) {
-      memeData["Memes"]["Videos"].splice(index, 1);
+      memeData["memes"]["videos"].splice(index, 1);
     }
     let string = JSON.stringify(memeData, null, '\t');
 
@@ -42,7 +40,7 @@ const saveMemeToJSON = async (meme) => {
   fs.readFile("../data.json", 'utf8', (err, data) => {
 
     let memeData = JSON.parse(data);
-    memeData["Memes"]["Videos"].push(meme);
+    memeData["memes"]["videos"].push(meme);
     let string = JSON.stringify(memeData, null, '\t');
 
     fs.writeFile('../data.json', string, (err) => {
@@ -57,10 +55,10 @@ const saveSettingsToJSON = async (name, method) => {
   fs.readFile("./data.json", 'utf8', (err, data) => {
 
     let memeData = JSON.parse(data);
-    let chosenMeme = lodash.filter(memeData["Memes"]["Videos"], x => x.name === name);
+    let chosenMeme = lodash.filter(memeData["memes"]["videos"], x => x.name === name);
 
-    memeData["Memes"]["ChosenMeme"] = chosenMeme;
-    memeData["Memes"]["Method"] = method;
+    memeData["memes"]["chosenMeme"] = chosenMeme;
+    memeData["memes"]["method"] = method;
 
     let string = JSON.stringify(memeData, null, '\t');
 
@@ -104,11 +102,11 @@ app.get('/api/meme', async (req, res) => {
     if (err) return console.error(err);
     let meme = {};
     let memeData = JSON.parse(data);
-    let memeList = memeData["Memes"]["Videos"];
-    if (memeData["Memes"]["Method"] === "random") {
+    let memeList = memeData["memes"]["videos"];
+    if (memeData["memes"]["method"] === "random") {
       meme = memeList[Math.floor(Math.random() * memeList.length)];
     } else {
-      meme = memeData["Memes"]["ChosenMeme"][0];
+      meme = memeData["memes"]["chosenMeme"][0];
     }
 
     //res.send(meme);
@@ -118,4 +116,4 @@ app.get('/api/meme', async (req, res) => {
   });
 });
 
-app.listen(port, () => console.log(`Server listening on port ${port}`));
+app.listen(port, () => console.log(`QR Code Server listening on port ${port}`));

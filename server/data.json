@@ -1,33 +1,33 @@
 {
-	"Memes": {
-		"Method": "selected",
-		"ChosenMeme": [
-			{
-				"name": "chickens",
-				"url": "https://youtu.be/F-X4SLhorvw?t=26"
-			}
-		],
-		"Videos": [
-			{
-				"name": "allstar",
-				"url": "https://youtu.be/Uo2SNtFofWI?t=7"
-			},
-			{
-				"name": "chipotle",
-				"url": "https://youtu.be/8rDNZ5Ebwsc?t=7"
-			},
-			{
-				"name": "chickens",
-				"url": "https://youtu.be/F-X4SLhorvw?t=26"
-			},
-			{
-				"name": "dreams-stutter",
-				"url": "https://youtu.be/G7RgN9ijwE4"
-			},
-			{
-				"name": "refrigerators",
-				"url": "https://youtu.be/TiC8pig6PGE?t=10"
-			}
-		]
-	}
+  "memes": {
+    "method": "selected",
+    "chosenMeme": [
+      {
+        "name": "chickens",
+        "url": "https://youtu.be/F-X4SLhorvw?t=26"
+      }
+    ],
+    "videos": [
+      {
+        "name": "allstar",
+        "url": "https://youtu.be/Uo2SNtFofWI?t=7"
+      },
+      {
+        "name": "chipotle",
+        "url": "https://youtu.be/8rDNZ5Ebwsc?t=7"
+      },
+      {
+        "name": "chickens",
+        "url": "https://youtu.be/F-X4SLhorvw?t=26"
+      },
+      {
+        "name": "dreams-stutter",
+        "url": "https://youtu.be/G7RgN9ijwE4"
+      },
+      {
+        "name": "refrigerators",
+        "url": "https://youtu.be/TiC8pig6PGE?t=10"
+      }
+    ]
+  }
 }

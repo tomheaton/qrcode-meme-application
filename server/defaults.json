@@ -1,13 +1,13 @@
 {
-  "Memes": {
-    "Method": "selected",
-    "ChosenMeme": [
+  "memes": {
+    "method": "selected",
+    "chosenMeme": [
       {
         "name": "allstar",
         "url": "https://youtu.be/Uo2SNtFofWI?t=7"
       }
     ],
-    "Videos": [
+    "videos": [
       {
         "name": "allstar",
         "url": "https://youtu.be/Uo2SNtFofWI?t=7"
