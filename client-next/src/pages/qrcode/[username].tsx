@@ -1,5 +1,5 @@
 
-const TestPage = () => {
+const QrCodePage = () => {
     return (
         <div>
             <h1 style={{textAlign: "center"}}>Hello World</h1>
@@ -7,4 +7,4 @@ const TestPage = () => {
     );
 }
 
-export default TestPage;
+export default QrCodePage;
