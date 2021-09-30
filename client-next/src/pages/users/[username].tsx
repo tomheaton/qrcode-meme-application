@@ -71,7 +71,6 @@ const ProfilePage: NextPage = () => {
                 </span>
                 </div>
             )}
-            <p>{mode}, {tab}</p>
             <h1 className={"font-bold text-5xl"}>Profile</h1>
             <br/>
             <h2 className={"font-bold text-3xl"}>{username}</h2>
@@ -100,7 +99,7 @@ const ProfilePage: NextPage = () => {
                     </div>
                 )}
                 {tab==="settings" && (
-                    <div className={"p-10 items-center"} style={{border: "red solid 1px"}}>
+                    <div className={"p-10 items-center"}>
                         <form className="w-full max-w-sm md:w-80" onSubmit={handleSubmit}>
                             <div className="md:flex md:items-center mb-6">
                                 <div className="md:w-1/3">
@@ -145,6 +144,18 @@ const ProfilePage: NextPage = () => {
                                                 <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
                                             </svg>
                                         </div>
+                                    </div>
+                                </div>
+                            )}
+                            { mode==="custom" && (
+                                <div className="md:flex md:items-center mb-6">
+                                    <div className="md:w-1/3">
+                                        <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" htmlFor="inline-full-name">
+                                            Meme
+                                        </label>
+                                    </div>
+                                    <div className="md:w-2/3">
+                                        <input className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" id="inline-url" type="text" placeholder="Enter URL"/>
                                     </div>
                                 </div>
                             )}
