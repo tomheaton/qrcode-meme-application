@@ -1,7 +1,18 @@
 import type {NextPage} from 'next';
 import Head from 'next/head';
+import {useRouter} from "next/router";
+import {FormEvent, useState} from "react";
 
 const Home: NextPage = () => {
+
+    const router = useRouter();
+    const [username, setUsername] = useState<string>("");
+
+    const handleSubmit = async (e: FormEvent) => {
+        e.preventDefault();
+        await router.push(`/users/${username}`);
+    }
+
     return (
         <div className="flex flex-col items-center justify-center min-h-screen py-2">
             <Head>
@@ -11,54 +22,41 @@ const Home: NextPage = () => {
 
             <main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
                 <h1 className="text-6xl font-bold">
-                    Welcome to{' '}
-                    <a className="text-blue-600" href="https://nextjs.org">
-                        Next.js!
-                    </a>
+                    Welcome to the QR Code Application
                 </h1>
-
+                <br/>
                 <p className="mt-3 text-2xl">
-                    Get started by editing{' '}
+                    Get started by entering you{" "}
                     <code className="p-3 font-mono text-lg bg-gray-100 rounded-md">
-                        pages/index.js
+                        username
                     </code>
+                    {" "}below ⤵️️
                 </p>
-
-                <div className="flex flex-wrap items-center justify-around max-w-4xl mt-6 sm:w-full">
-                    <a href="https://nextjs.org/docs" className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600">
-                        <h3 className="text-2xl font-bold">Documentation &rarr;</h3>
-                        <p className="mt-4 text-xl">
-                            Find in-depth information about Next.js features and API.
-                        </p>
-                    </a>
-
-                    <a href="https://nextjs.org/learn" className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600">
-                        <h3 className="text-2xl font-bold">Learn &rarr;</h3>
-                        <p className="mt-4 text-xl">
-                            Learn about Next.js in an interactive course with quizzes!
-                        </p>
-                    </a>
-
-                    <a href="https://github.com/vercel/next.js/tree/master/examples" className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600">
-                        <h3 className="text-2xl font-bold">Examples &rarr;</h3>
-                        <p className="mt-4 text-xl">
-                            Discover and deploy boilerplate example Next.js projects.
-                        </p>
-                    </a>
-
-                    <a href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app" className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600">
-                        <h3 className="text-2xl font-bold">Deploy &rarr;</h3>
-                        <p className="mt-4 text-xl">
-                            Instantly deploy your Next.js site to a public URL with Vercel.
-                        </p>
-                    </a>
+                <br/>
+                <div onSubmit={handleSubmit} className="flex flex-wrap items-center justify-around max-w-4xl mt-6 sm:w-full">
+                    <form className="w-full max-w-sm">
+                        <div className="md:flex md:items-center mb-6">
+                            <div className="md:w-1/3">
+                                <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" htmlFor="inline-username">
+                                    Username
+                                </label>
+                            </div>
+                            <div className="md:w-2/3">
+                                <input onChange={(e) => {setUsername(e.target.value)}} className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" id="inline-username" type="text" placeholder={"enter username"}/>
+                            </div>
+                        </div>
+                        <div className="flex items-center justify-center">
+                            <button disabled={username.length === 0} type="submit" className="shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded">
+                                Discover
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </main>
 
             <footer className="flex items-center justify-center w-full h-24 border-t">
-                <a className="flex items-center justify-center" href="https://vercel.com/" target="_blank" rel="noopener noreferrer">
-                    Powered by{' '}
-                    <img src="/vercel.svg" alt="Vercel Logo" className="h-4 ml-2" />
+                <a className="flex items-center justify-center" href="https://tomheaton.dev/" target="_blank" rel="noopener noreferrer">
+                    Developed by Tom Heaton
                 </a>
             </footer>
         </div>
