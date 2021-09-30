@@ -12,20 +12,21 @@ const ProfilePage: NextPage = () => {
     const router = useRouter();
     const { username } = router.query;
 
-    const [mode, setMode] = useState<"random"|"selected"|"website"|"snapchat"|"custom">("random");
-    const [tab, setTab] = useState<"qrcode"|"settings"|"other">("qrcode");
+    //const [mode, setMode] = useState<"random"|"selected"|"website"|"snapchat"|"custom">();
+    const [mode, setMode] = useState<any>();
+    //const [tab, setTab] = useState<"qrcode"|"settings"|"other">("qrcode");
+    const [tab, setTab] = useState<string>("qrcode");
     const [showError, setShowError] = useState<boolean>(false);
     const [memes, setMemes] = useState<[]>([]);
     const [chosenMeme, setChosenMeme] = useState<number>(0);
 
-    // TODO: this.
     useEffect(() => {
-        /*axios.get(`/api/data/${username}`).then(result => {
+        axios.get(`/api/data`).then(result => {
             setMode(result.data.mode);
         }).catch((error) => {
-            //setShowError(true);
+            setShowError(true);
             console.log("error", error);
-        });*/
+        });
     },[]);
 
     useEffect(() => {
@@ -33,7 +34,7 @@ const ProfilePage: NextPage = () => {
     },[mode==="selected"]);
 
     // TODO: this.
-    const handleModeUpdate = () => {
+    const handleSave = () => {
 /*        axios.post(`/api/data/${username}`).then(result => {
             setMode(result.data.mode);
         }).catch((error) => {
@@ -42,9 +43,10 @@ const ProfilePage: NextPage = () => {
     }
 
     // TODO: this.
-    const handleSubmit = (e: FormEvent) => {
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         console.log("submitting...");
+        await handleSave();
     }
 
     const fetchMemes = async () => {
@@ -67,7 +69,7 @@ const ProfilePage: NextPage = () => {
                 </span>
                 </div>
             )}
-            <p>{mode}</p>
+            <p>{mode}, {tab}</p>
             <h1 className={"font-bold text-5xl"}>Profile</h1>
             <br/>
             <h2 className={"font-bold text-3xl"}>{username}</h2>
@@ -97,7 +99,7 @@ const ProfilePage: NextPage = () => {
                 )}
                 {tab==="settings" && (
                     <div className={"p-10 items-center"} style={{border: "red solid 1px"}}>
-                        <form className="w-full max-w-sm md:w-80" onSubmit={(e) => {handleSubmit(e)}}>
+                        <form className="w-full max-w-sm md:w-80" onSubmit={handleSubmit}>
                             <div className="md:flex md:items-center mb-6">
                                 <div className="md:w-1/3">
                                     <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" htmlFor="inline-full-name">
@@ -105,8 +107,7 @@ const ProfilePage: NextPage = () => {
                                     </label>
                                 </div>
                                 <div className="md:w-2/3 inline-block relative">
-                                    <select value={mode} onChange={(e) => { // @ts-ignore
-                                        setMode(e.target.value)}}
+                                    <select value={mode} onChange={(e) => {setMode(e.target.value)}}
                                             className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
                                         <option value={"random"}>Random Meme</option>
                                         <option value={"selected"}>Selected Meme</option>
@@ -129,10 +130,10 @@ const ProfilePage: NextPage = () => {
                                         </label>
                                     </div>
                                     <div className="md:w-2/3 inline-block relative">
-                                        <select onChange={(e) => {setChosenMeme(e.target.value)}}
+                                        <select onChange={(e) => {setChosenMeme(e.target.selectedIndex)}}
                                                 className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
                                             {
-                                                memes.map((element, index) => {
+                                                memes.map((element: {name: string}, index: number) => {
                                                     return (<option value={index}>{element.name}</option>);
                                                 })
                                             }
