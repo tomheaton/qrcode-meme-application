@@ -26,7 +26,7 @@ const Home: NextPage = () => {
                 </h1>
                 <br/>
                 <p className="mt-3 text-2xl">
-                    Get started by entering you{" "}
+                    Get started by entering your{" "}
                     <code className="p-3 font-mono text-lg bg-gray-100 rounded-md">
                         username
                     </code>
