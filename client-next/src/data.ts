@@ -32,6 +32,11 @@ export const data = {
             id: 5,
             name: "rickroll",
             link: "https://youtu.be/dQw4w9WgXcQ"
+        },
+        {
+            id: 6,
+            name: "six-consoles",
+            link: "https://youtu.be/RuERcyUwpZk?t=10"
         }
     ]
 }
