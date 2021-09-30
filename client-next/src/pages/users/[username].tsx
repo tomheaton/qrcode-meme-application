@@ -20,6 +20,8 @@ const ProfilePage: NextPage = () => {
     const [memes, setMemes] = useState<[]>([]);
     const [chosenMeme, setChosenMeme] = useState<number>(0);
 
+    const checkTab: boolean = mode ==="selected";
+
     useEffect(() => {
         axios.get(`/api/data`).then(result => {
             setMode(result.data.mode);
@@ -31,7 +33,7 @@ const ProfilePage: NextPage = () => {
 
     useEffect(() => {
         fetchMemes();
-    },[mode==="selected"]);
+    },[checkTab]);
 
     // TODO: this.
     const handleSave = () => {
@@ -134,7 +136,7 @@ const ProfilePage: NextPage = () => {
                                                 className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
                                             {
                                                 memes.map((element: {name: string}, index: number) => {
-                                                    return (<option value={index}>{element.name}</option>);
+                                                    return (<option key={index} value={index}>{element.name}</option>);
                                                 })
                                             }
                                         </select>
