@@ -10,10 +10,9 @@ type ReqData = {
 const handler = (req: ReqData, res: NextApiResponse) => {
 
     const selectedId = data.selected;
-    const selected = data.all.filter((o) => o.id === selectedId)
-
-    res.redirect(selected[0].link);
-    //res.status(200).json(JSON.stringify(selected));
+    // const selected = data.all.filter((o) => o.id === selectedId)
+    // res.redirect(selected[0].link);
+    res.redirect(data.all[Math.floor(Math.random() * data.all.length)].link);
 }
 
 export default handler;
