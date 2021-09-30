@@ -30,7 +30,7 @@ const Home: NextPage = () => {
                     <code className="p-3 font-mono text-lg bg-gray-100 rounded-md">
                         username
                     </code>
-                    {" "}below ⤵️️
+                    {" "}below {/*⤵*/}️️
                 </p>
                 <br/>
                 <div onSubmit={handleSubmit} className="flex flex-wrap items-center justify-around max-w-4xl mt-6 sm:w-full">

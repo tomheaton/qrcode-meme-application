@@ -1,5 +1,5 @@
 import type {NextApiRequest, NextApiResponse} from 'next';
-import {data} from "../../data";
+import {data} from "../../../data";
 
 const handler = (req: NextApiRequest, res: NextApiResponse) => {
     res.status(200).json(data);

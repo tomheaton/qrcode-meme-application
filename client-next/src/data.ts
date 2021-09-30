@@ -1,4 +1,7 @@
 export const data = {
+    count: 0,
+    custom: "https://www.google.com",
+    website: "https://www.tomheaton.dev",
     snapchat: "https://www.snapchat.com/add/tomheaton7",
     mode: "random",
     selected: 0,

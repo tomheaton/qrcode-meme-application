@@ -1,6 +1,6 @@
 import {useRouter} from "next/router";
 import QRCode from "react-qr-code";
-import {useState, useEffect, FormEvent} from "react";
+import {FormEvent, useEffect, useState} from "react";
 import axios from "axios";
 import {NextPage} from "next";
 
@@ -23,7 +23,7 @@ const ProfilePage: NextPage = () => {
     const checkTab: boolean = mode ==="selected";
 
     useEffect(() => {
-        axios.get(`/api/data`).then(result => {
+        axios.get(`http://localhost:3000/api/data`).then(result => {
             setMode(result.data.mode);
         }).catch((error) => {
             setShowError(true);
@@ -37,25 +37,46 @@ const ProfilePage: NextPage = () => {
 
     // TODO: this.
     const handleSave = () => {
-/*        axios.post(`/api/data/${username}`).then(result => {
-            setMode(result.data.mode);
+        axios.post(`http://localhost:3000/api/data/mode`, {newMode: mode}).then(result => {
+            console.log("result", result)
         }).catch((error) => {
             console.log("error", error);
-        });*/
+        });
     }
 
     // TODO: this.
-    const handleSubmit = async (e: FormEvent) => {
+    const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
-        console.log("submitting...");
-        await handleSave();
+        handleSave();
     }
 
     const fetchMemes = async () => {
-        await axios.get("/api/data").then((result) => {
+        await axios.get("http://localhost:3000/api/data").then((result) => {
             setMemes(result.data.memes);
         });
     }
+
+    const handleDownload = () => {
+        // Credit to Ross Khanas (https://rosskhanas.github.io/react-qr-code/)
+        const svg = document.getElementById("QRCode");
+        // @ts-ignore
+        const svgData = new XMLSerializer().serializeToString(svg);
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+        const img = new Image();
+        img.onload = () => {
+            canvas.width = img.width;
+            canvas.height = img.height;
+            // @ts-ignore
+            ctx.drawImage(img, 0, 0);
+            const pngFile = canvas.toDataURL("image/png");
+            const downloadLink = document.createElement("a");
+            downloadLink.download = "QRCode";
+            downloadLink.href = `${pngFile}`;
+            downloadLink.click();
+        };
+        img.src = `data:image/svg+xml;base64,${btoa(svgData)}`;
+    };
 
     return (
         <div className="flex flex-col items-center min-h-screen py-2 pt-10">
@@ -95,7 +116,12 @@ const ProfilePage: NextPage = () => {
             <div>
                 {tab==="qrcode" && (
                     <div className={"p-10"}>
-                        <QRCode value={`https://qrcode.tomheaton.dev/api/qrcode/${username}`}/>
+                        <QRCode id={"QRCode"} value={`https://qrcode.tomheaton.dev/api/qrcode/${username}`}/>
+                        <div className="flex items-center justify-center p-4">
+                            <button onClick={handleDownload} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                Download
+                            </button>
+                        </div>
                     </div>
                 )}
                 {tab==="settings" && (
@@ -103,7 +129,7 @@ const ProfilePage: NextPage = () => {
                         <form className="w-full max-w-sm md:w-80" onSubmit={handleSubmit}>
                             <div className="md:flex md:items-center mb-6">
                                 <div className="md:w-1/3">
-                                    <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" htmlFor="inline-full-name">
+                                    <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" htmlFor="inline-mode">
                                         Mode
                                     </label>
                                 </div>
@@ -159,13 +185,10 @@ const ProfilePage: NextPage = () => {
                                     </div>
                                 </div>
                             )}
-                            <div className="md:flex md:items-center">
-                                <div className="md:w-1/3"/>
-                                <div className="md:w-2/3">
-                                    <button type={"submit"} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                        Save
-                                    </button>
-                                </div>
+                            <div className="flex items-center justify-center">
+                                <button type={"submit"} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                    Save
+                                </button>
                             </div>
                         </form>
                     </div>
