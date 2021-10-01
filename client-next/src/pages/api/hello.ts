@@ -2,7 +2,7 @@ import type {NextApiRequest, NextApiResponse} from 'next';
 import prisma from "../../lib/prisma";
 
 type Data = {
-    data: []
+    data: any[]
 }
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
