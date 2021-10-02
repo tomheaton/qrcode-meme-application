@@ -101,17 +101,17 @@ const ProfilePage: NextPage = () => {
             <h2 className={"font-bold text-3xl"}>{username}</h2>
             <br/>
             <ul className="flex border-b">
-                <li className="-mb-px mr-1">
+                <li className={`mr-1 ${tab==="qrcode" && "-mb-px"}`}>
                     <button onClick={() => {setTab("qrcode")}} className={tab==="qrcode" ? selectedStyle : unselectedStyle}>
                         QR Code
                     </button>
                 </li>
-                <li className="mr-1">
+                <li className={`mr-1 ${tab==="settings" && "-mb-px"}`}>
                     <button onClick={() => {setTab("settings")}} className={tab==="settings" ? selectedStyle : unselectedStyle}>
                         Settings
                     </button>
                 </li>
-                <li className="mr-1">
+                <li className={`mr-1 ${tab==="other" && "-mb-px"}`}>
                     <button onClick={() => {setTab("other")}} className={tab==="other" ? selectedStyle : unselectedStyle}>
                         Other
                     </button>
