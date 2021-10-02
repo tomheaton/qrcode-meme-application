@@ -8,18 +8,72 @@ type Data = {
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
-    const { username } = req.query as { username: string };
+    const _method = req.method;
+    const { username } = req.query as { username: string};
+    const { method, selectedMeme, customUrl } = req.body as { method: string, selectedMeme: any, customUrl: any };
 
-    const result = await prisma.user.findUnique({
-        where: {
-            username: username
-        },
-        include: {
-            memes: true
-        }
-    });
+    let result;
 
-    res.status(200).json({ data: result });
+    switch (_method) {
+        case 'GET':
+            result = await prisma.user.findUnique({
+                where: {
+                    username: username
+                },
+                include: {
+                    memes: true
+                }
+            });
+            res.status(200).json({ data: result });
+            break;
+        case 'PUT':
+            if (["random", "selected", "custom", "website", "snapchat"].includes(method)) {
+                switch (method) {
+                    case "selected":
+                        result = await prisma.user.update({
+                            where: {
+                                username: username
+                            },
+                            data: {
+                                method: method,
+                                selected: selectedMeme
+                            }
+                        });
+                        res.status(200).json({data: result});
+                        break;
+                    case "custom":
+                        result = await prisma.user.update({
+                            where: {
+                                username: username
+                            },
+                            data: {
+                                method: method,
+                                custom: customUrl
+                            }
+                        });
+                        res.status(200).json({data: result});
+                        break;
+                    default:
+                        result = await prisma.user.update({
+                            where: {
+                                username: username
+                            },
+                            data: {
+                                method: method
+                            }
+                        });
+                        res.status(200).json({data: result});
+                        break;
+                }
+            } else {
+                res.status(403).end(`Selected Method ${method} Invalid`);
+            }
+            break;
+        default:
+            res.setHeader('Allow', ['GET', 'PUT']);
+            res.status(405).end(`Method ${_method} Not Allowed`);
+            break;
+    }
 }
 
 export default handler;

@@ -11,8 +11,7 @@ const ProfilePage: NextPage = () => {
     const unselectedStyle = "bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold";
 
     const router = useRouter();
-    let username: string | string[] | undefined;
-    username = router.query.username;
+    const username = router.query.username;
 
     //const [mode, setMode] = useState<"random"|"selected"|"website"|"snapchat"|"custom">();
     const [method, setMethod] = useState<string>();
@@ -21,13 +20,14 @@ const ProfilePage: NextPage = () => {
     const [showError, setShowError] = useState<boolean>(false);
     const [memes, setMemes] = useState<[]>([]);
     const [selectedMeme, setSelectedMeme] = useState<number>(1);
+    const [customUrl, setCustomUrl] = useState<string>("");
 
+    // TODO: use Next.js initial props?
     useEffect(() => {
         //username = router.query.username;
         (async () => {
             axios.get(`http://localhost:3000/api/users/${username}/method`).then(result => {
                 setMethod(result.data.method);
-                console.log("method data", result.data)
             }).catch((error) => {
                 setShowError(true);
                 console.log("error", error);
@@ -36,19 +36,20 @@ const ProfilePage: NextPage = () => {
         fetchMemes();
     },[username]);
 
+    const handleSubmit = async (e: FormEvent) => {
+        e.preventDefault();
+        await handleSave();
+    }
+
     // TODO: this.
     const handleSave = () => {
-        axios.put(`http://localhost:3000/api/users/${username}/method`, JSON.stringify({method: method})).then(result => {
+        axios.put(`http://localhost:3000/api/users/${username}`,
+            { method: method, selectedMeme: selectedMeme, customUrl: customUrl }
+        ).then(result => {
             console.log("result", result)
         }).catch((error) => {
             console.log("error", error);
         });
-    }
-
-    // TODO: this.
-    const handleSubmit = (e: FormEvent) => {
-        e.preventDefault();
-        handleSave();
     }
 
     const fetchMemes = async () => {
@@ -84,6 +85,7 @@ const ProfilePage: NextPage = () => {
 
     return (
         <div className="flex flex-col items-center min-h-screen py-2 pt-10">
+            <p>username: {username}, method: {method}, selectedMeme: {selectedMeme}, customUrl: {customUrl}</p>
             { showError && (
                 <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
                     <strong className="font-bold">Holy smokes!</strong>
@@ -161,7 +163,7 @@ const ProfilePage: NextPage = () => {
                                         </label>
                                     </div>
                                     <div className="md:w-2/3 inline-block relative">
-                                        <select onChange={(e) => {setSelectedMeme(e.target.selectedIndex)}} className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+                                        <select onChange={(e) => {setSelectedMeme(e.target.selectedIndex+1)}} className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
                                             {
                                                 memes.map((element: Meme) => {
                                                     return (<option key={element.id} value={element.id}>{element.name}</option>);
@@ -184,7 +186,9 @@ const ProfilePage: NextPage = () => {
                                         </label>
                                     </div>
                                     <div className="md:w-2/3">
-                                        <input className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" id="inline-url" type="text" placeholder="Enter URL"/>
+                                        <input onChange={(e) => {setCustomUrl(e.target.value)}} className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" id="inline-url" type="text" placeholder="Enter URL"/>
+                                        {/*TODO: add regEx [https?:\/\/(www\.)?] to check url*/}
+                                        {/*{<p>Please include http/https</p>}*/}
                                     </div>
                                 </div>
                             )}

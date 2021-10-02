@@ -1,32 +1,46 @@
 import type {NextApiRequest, NextApiResponse} from 'next';
+import prisma from "../../../lib/prisma";
+import type {User} from "@prisma/client";
 
-const handler = (req: NextApiRequest, res: NextApiResponse) => {
-    // TODO: please connect to database before this gets worse :peepoSad:
-    /*const { mode } = data;
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
-    switch (mode) {
-        case "snapchat":
-            res.redirect(data.snapchat);
-            break;
-        case "website":
-            res.redirect(data.website);
-            break;
-        case "custom":
-            res.redirect(data.custom);
-            break;
-        case "selected":
-            const selectedId = data.selected;
-            const selected = data.memes.filter((o) => o.id === selectedId)
-            res.redirect(selected[0].link);
-            break;
-        case "random":
-            res.redirect(data.memes[Math.floor(Math.random() * data.memes.length)].link);
-            break;
-        default:
-            // TODO: refactor "mode" -> "method"
-            res.status(404).end(`Mode ${mode} Not Found`)
-            break;
-    }*/
+    const {username} = req.query as {username: string}
+
+    const result = await prisma.user.findUnique({
+        where: {
+            username: username
+        },
+        include: {
+            memes: true
+        }
+    })
+
+    if (result) {
+        switch (result.method) {
+            case "snapchat":
+                res.redirect(result.snapchat ? `https://www.snapchat.com/add/${result.snapchat}` : "https://qrcode.tomheaton.dev");
+                break;
+            case "website":
+                res.redirect(result.website ? result.website : "https://qrcode.tomheaton.dev");
+                break;
+            case "custom":
+                res.redirect(result.custom ? result.custom : "https://qrcode.tomheaton.dev");
+                break;
+            case "selected":
+                const selected = result.memes.filter((o) => o.id === result.selected)
+                res.redirect(selected[0].link);
+                break;
+            case "random":
+                res.redirect(result.memes[Math.floor(Math.random() * result.memes.length)].link);
+                break;
+            default:
+                res.status(404).end(`Method ${result.method} Not Found`)
+                break;
+        }
+    } else {
+        // unlikely, but oh well...
+        res.status(404).end(`Method Not Found`)
+    }
 }
 
 export default handler;

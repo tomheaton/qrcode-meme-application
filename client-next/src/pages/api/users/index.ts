@@ -3,12 +3,17 @@ import prisma from "../../../lib/prisma";
 import type {User} from "@prisma/client";
 
 type Data = {
-    data: User[]
+    data: {username: string}[]
 }
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
-    const result = await prisma.user.findMany()
+    const result = await prisma.user.findMany({
+        select: {
+            id: true,
+            username: true
+        }
+    });
     res.status(200).json({ data: result });
 }
 

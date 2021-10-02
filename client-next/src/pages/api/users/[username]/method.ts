@@ -7,7 +7,6 @@ type Data = {
 }
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
-    //res.status(200).json(data);
 
     const _method = req.method;
     const { username } = req.query as { username: string };
@@ -25,8 +24,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
             res.status(200).json({ data: result });
             break;
         case 'PUT':
-            /*//data.count = data.count + 1;
-            // verify "modes" here.
+            /*
             if (["random", "selected", "custom", "website", "snapchat"].includes(newMode)) {
                 data.mode = newMode;
             }

@@ -14,7 +14,7 @@ model User {
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
     memes     Meme[]
-    selected  Int      @default(0)
+    selected  Int      @default(1)
     method    String   @default("random")
     snapchat  String?
     website   String?
