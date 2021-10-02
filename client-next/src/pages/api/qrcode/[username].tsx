@@ -1,6 +1,5 @@
 import type {NextApiRequest, NextApiResponse} from 'next';
 import prisma from "../../../lib/prisma";
-import type {User} from "@prisma/client";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 

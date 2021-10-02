@@ -26,7 +26,7 @@ const ProfilePage: NextPage = () => {
     useEffect(() => {
         //username = router.query.username;
         (async () => {
-            axios.get(`http://localhost:3000/api/users/${username}/method`).then(result => {
+            axios.get(`/api/users/${username}/method`).then(result => {
                 setMethod(result.data.method);
             }).catch((error) => {
                 console.log("error", error);
@@ -46,7 +46,7 @@ const ProfilePage: NextPage = () => {
 
     // TODO: this.
     const handleSave = () => {
-        axios.put(`http://localhost:3000/api/users/${username}`,
+        axios.put(`/api/users/${username}`,
             { method: method, selectedMeme: selectedMeme, customUrl: customUrl }
         ).then(result => {
             console.log("result", result)
@@ -56,7 +56,7 @@ const ProfilePage: NextPage = () => {
     }
 
     const fetchMemes = async () => {
-        await axios.get(`http://localhost:3000/api/memes?username=${username}`).then((result) => {
+        await axios.get(`/api/memes?username=${username}`).then((result) => {
             setMemes(result.data.data);
             console.log("meme data", result.data)
         }).catch((error) => {
