@@ -2,29 +2,11 @@ import {useRouter} from "next/router";
 import QRCode from "react-qr-code";
 import {FormEvent, useEffect, useState} from "react";
 import axios from "axios";
-import {GetServerSideProps, NextPage} from "next";
-import type {Meme, User} from "@prisma/client";
+import {NextPage} from "next";
+import type {Meme} from "@prisma/client";
 import Head from "next/head";
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-
-    const {username} = context.params as {username: string}
-
-    const result = await axios.get(`/api/users/${username}`);
-
-    return {
-        props: {
-            user: result
-        },
-    };
-};
-
-type Props = {
-    user: User,
-    memes: Meme[]
-};
-
-const ProfilePage: NextPage<Props> = (props) => {
+const ProfilePage: NextPage = () => {
 
     const selectedStyle = "border-l border-t border-r rounded-t bg-white inline-block py-2 px-4 text-blue-500 font-semibold";
     const unselectedStyle = "bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold";
@@ -112,7 +94,6 @@ const ProfilePage: NextPage<Props> = (props) => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <p>props: {props}</p>
             <h1 className={"font-bold text-5xl"}>Profile</h1>
             <br/>
             <h2 className={"font-bold text-3xl"}>{username}</h2>
