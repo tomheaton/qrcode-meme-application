@@ -1,9 +1,8 @@
 import type {NextApiRequest, NextApiResponse} from 'next';
-import {data} from "../../../data";
 
 const handler = (req: NextApiRequest, res: NextApiResponse) => {
     // TODO: please connect to database before this gets worse :peepoSad:
-    const { mode } = data;
+    /*const { mode } = data;
 
     switch (mode) {
         case "snapchat":
@@ -27,7 +26,7 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
             // TODO: refactor "mode" -> "method"
             res.status(404).end(`Mode ${mode} Not Found`)
             break;
-    }
+    }*/
 }
 
 export default handler;

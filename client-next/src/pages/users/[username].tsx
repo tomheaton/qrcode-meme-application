@@ -3,6 +3,7 @@ import QRCode from "react-qr-code";
 import {FormEvent, useEffect, useState} from "react";
 import axios from "axios";
 import {NextPage} from "next";
+import type {Meme} from "@prisma/client";
 
 const ProfilePage: NextPage = () => {
 
@@ -10,34 +11,34 @@ const ProfilePage: NextPage = () => {
     const unselectedStyle = "bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold";
 
     const router = useRouter();
-    const { username } = router.query;
+    let username: string | string[] | undefined;
+    username = router.query.username;
 
     //const [mode, setMode] = useState<"random"|"selected"|"website"|"snapchat"|"custom">();
-    const [mode, setMode] = useState<any>();
+    const [method, setMethod] = useState<string>();
     //const [tab, setTab] = useState<"qrcode"|"settings"|"other">("qrcode");
     const [tab, setTab] = useState<string>("qrcode");
     const [showError, setShowError] = useState<boolean>(false);
     const [memes, setMemes] = useState<[]>([]);
-    const [chosenMeme, setChosenMeme] = useState<number>(0);
-
-    const checkTab: boolean = mode ==="selected";
+    const [selectedMeme, setSelectedMeme] = useState<number>(1);
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/api/data`).then(result => {
-            setMode(result.data.mode);
-        }).catch((error) => {
-            setShowError(true);
-            console.log("error", error);
-        });
-    },[]);
-
-    useEffect(() => {
+        //username = router.query.username;
+        (async () => {
+            axios.get(`http://localhost:3000/api/users/${username}/method`).then(result => {
+                setMethod(result.data.method);
+                console.log("method data", result.data)
+            }).catch((error) => {
+                setShowError(true);
+                console.log("error", error);
+            });
+        })();
         fetchMemes();
-    },[checkTab]);
+    },[username]);
 
     // TODO: this.
     const handleSave = () => {
-        axios.post(`http://localhost:3000/api/data/mode`, {newMode: mode}).then(result => {
+        axios.put(`http://localhost:3000/api/users/${username}/method`, JSON.stringify({method: method})).then(result => {
             console.log("result", result)
         }).catch((error) => {
             console.log("error", error);
@@ -51,8 +52,11 @@ const ProfilePage: NextPage = () => {
     }
 
     const fetchMemes = async () => {
-        await axios.get("http://localhost:3000/api/data").then((result) => {
-            setMemes(result.data.memes);
+        await axios.get(`http://localhost:3000/api/memes?username=${username}`).then((result) => {
+            setMemes(result.data.data);
+            console.log("meme data", result.data)
+        }).catch((error) => {
+            console.log("error", error)
         });
     }
 
@@ -76,7 +80,7 @@ const ProfilePage: NextPage = () => {
             downloadLink.click();
         };
         img.src = `data:image/svg+xml;base64,${btoa(svgData)}`;
-    };
+    }
 
     return (
         <div className="flex flex-col items-center min-h-screen py-2 pt-10">
@@ -134,7 +138,7 @@ const ProfilePage: NextPage = () => {
                                     </label>
                                 </div>
                                 <div className="md:w-2/3 inline-block relative">
-                                    <select value={mode} onChange={(e) => {setMode(e.target.value)}}
+                                    <select value={method} onChange={(e) => {setMethod(e.target.value)}}
                                             className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
                                         <option value={"random"}>Random Meme</option>
                                         <option value={"selected"}>Selected Meme</option>
@@ -149,7 +153,7 @@ const ProfilePage: NextPage = () => {
                                     </div>
                                 </div>
                             </div>
-                            { memes.length > 0 && mode==="selected" && (
+                            { memes && method==="selected" && (
                                 <div className="md:flex md:items-center mb-6">
                                     <div className="md:w-1/3">
                                         <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" htmlFor="inline-full-name">
@@ -157,11 +161,10 @@ const ProfilePage: NextPage = () => {
                                         </label>
                                     </div>
                                     <div className="md:w-2/3 inline-block relative">
-                                        <select onChange={(e) => {setChosenMeme(e.target.selectedIndex)}}
-                                                className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+                                        <select onChange={(e) => {setSelectedMeme(e.target.selectedIndex)}} className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
                                             {
-                                                memes.map((element: {name: string}, index: number) => {
-                                                    return (<option key={index} value={index}>{element.name}</option>);
+                                                memes.map((element: Meme) => {
+                                                    return (<option key={element.id} value={element.id}>{element.name}</option>);
                                                 })
                                             }
                                         </select>
@@ -173,7 +176,7 @@ const ProfilePage: NextPage = () => {
                                     </div>
                                 </div>
                             )}
-                            { mode==="custom" && (
+                            { method==="custom" && (
                                 <div className="md:flex md:items-center mb-6">
                                     <div className="md:w-1/3">
                                         <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" htmlFor="inline-full-name">
