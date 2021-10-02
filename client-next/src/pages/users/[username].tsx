@@ -32,8 +32,12 @@ const ProfilePage: NextPage = () => {
                 console.log("error", error);
             });
         })();
+        fetchMemes()
+    },[]);
+
+    useEffect(() => {
         fetchMemes();
-    },[username]);
+    }, [method])
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
