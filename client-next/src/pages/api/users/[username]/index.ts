@@ -2,9 +2,7 @@ import type {NextApiRequest, NextApiResponse} from 'next';
 import prisma from "../../../../lib/prisma";
 import type {User} from "@prisma/client";
 
-type Data = {
-    data: User | null
-}
+type Data = User | null;
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
@@ -24,7 +22,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
                     memes: true
                 }
             });
-            res.status(200).json({ data: result });
+            res.status(200).json(result);
             break;
         case 'PUT':
             if (["random", "selected", "custom", "website", "snapchat"].includes(method)) {
@@ -39,7 +37,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
                                 selected: selectedMeme
                             }
                         });
-                        res.status(200).json({data: result});
+                        res.status(200).json(result);
                         break;
                     case "custom":
                         result = await prisma.user.update({
@@ -51,7 +49,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
                                 custom: customUrl
                             }
                         });
-                        res.status(200).json({data: result});
+                        res.status(200).json(result);
                         break;
                     default:
                         result = await prisma.user.update({
@@ -62,7 +60,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
                                 method: method
                             }
                         });
-                        res.status(200).json({data: result});
+                        res.status(200).json(result);
                         break;
                 }
             } else {

@@ -2,9 +2,7 @@ import type {NextApiRequest, NextApiResponse} from 'next';
 import prisma from "../../../lib/prisma";
 import type {Meme} from "@prisma/client";
 
-type Data = {
-    data: Meme[]
-}
+type Data = Meme[] | null
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
@@ -18,7 +16,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         }
     })
 
-    res.status(200).json({ data: result });
+    res.status(200).json(result);
 }
 
 export default handler;

@@ -1,12 +1,41 @@
 import {useRouter} from "next/router";
-import QRCode from "react-qr-code";
-import {FormEvent, useEffect, useState} from "react";
-import axios from "axios";
 import {NextPage} from "next";
-import type {Meme} from "@prisma/client";
 import Head from "next/head";
+import {Meme, User} from "@prisma/client";
+import {API_ENDPOINT} from "../../lib/config";
+import prisma from "../../lib/prisma";
+import {FormEvent, useState} from "react";
+import QRCode from "react-qr-code";
 
-const ProfilePage: NextPage = () => {
+export async function getServerSideProps(context: any) {
+    try {
+        //const result = await fetch(`${API_ENDPOINT}/users/${context.query.username}`);
+        const result = await prisma.user.findUnique({
+            where: {
+                username: context.query.username
+            },
+            include: {
+                memes: true
+            }
+        });
+
+        return {
+            props: {
+                /*user: await result.json()*/
+                user: JSON.parse(JSON.stringify(result))
+            }
+        };
+    } catch (error) {
+        console.log("error:", error);
+        throw error;
+    }
+}
+
+type Props = {
+    user: User & {memes: Meme[]} | null
+}
+
+const ProfilePage: NextPage<Props> = (props) => {
 
     const selectedStyle = "border-l border-t border-r rounded-t bg-white inline-block py-2 px-4 text-blue-500 font-semibold";
     const unselectedStyle = "bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold";
@@ -14,54 +43,21 @@ const ProfilePage: NextPage = () => {
     const router = useRouter();
     const username = router.query.username;
 
-    //const [mode, setMode] = useState<"random"|"selected"|"website"|"snapchat"|"custom">();
     const [method, setMethod] = useState<string>();
-    //const [tab, setTab] = useState<"qrcode"|"settings"|"other">("qrcode");
     const [tab, setTab] = useState<string>("qrcode");
-    const [showError, setShowError] = useState<boolean>(false);
-    const [memes, setMemes] = useState<[]>([]);
     const [selectedMeme, setSelectedMeme] = useState<number>(1);
-    const [customUrl, setCustomUrl] = useState<string>("");
-
-    // TODO: use Next.js initial props?
-    useEffect(() => {
-        //username = router.query.username;
-        (async () => {
-            axios.get(`/api/users/${username}/method`).then(result => {
-                setMethod(result.data.method);
-            }).catch((error) => {
-                console.log("error", error);
-            });
-        })();
-        fetchMemes()
-    },[]);
-
-    useEffect(() => {
-        fetchMemes();
-    }, [method])
+    const [customUrl, setCustomUrl] = useState<string | null>(props.user ? props.user.custom : "");
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         await handleSave();
     }
 
-    // TODO: this.
-    const handleSave = () => {
-        axios.put(`/api/users/${username}`,
-            { method: method, selectedMeme: selectedMeme, customUrl: customUrl }
-        ).then(result => {
-            console.log("result", result)
-        }).catch((error) => {
-            console.log("error", error);
-        });
-    }
-
-    const fetchMemes = async () => {
-        await axios.get(`/api/memes?username=${username}`).then((result) => {
-            setMemes(result.data.data);
-            console.log("meme data", result.data)
-        }).catch((error) => {
-            console.log("error", error)
+    // TODO: handle errors.
+    const handleSave = async () => {
+        const result = await fetch(`${API_ENDPOINT}/users/${username}`, {
+            method: "PUT",
+            body: JSON.stringify({ method: method, selectedMeme: selectedMeme, customUrl: customUrl })
         });
     }
 
@@ -151,7 +147,7 @@ const ProfilePage: NextPage = () => {
                                     </div>
                                 </div>
                             </div>
-                            { memes && method==="selected" && (
+                            { props.user && props.user.memes && method==="selected" && (
                                 <div className="md:flex md:items-center mb-6">
                                     <div className="md:w-1/3">
                                         <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" htmlFor="inline-full-name">
@@ -161,7 +157,7 @@ const ProfilePage: NextPage = () => {
                                     <div className="md:w-2/3 inline-block relative">
                                         <select onChange={(e) => {setSelectedMeme(e.target.selectedIndex+1)}} className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
                                             {
-                                                memes.map((element: Meme) => {
+                                                props.user.memes.map((element: Meme) => {
                                                     return (<option key={element.id} value={element.id}>{element.name}</option>);
                                                 })
                                             }
