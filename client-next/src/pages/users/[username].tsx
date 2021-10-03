@@ -2,9 +2,8 @@ import {useRouter} from "next/router";
 import {NextPage} from "next";
 import Head from "next/head";
 import {Meme, User} from "@prisma/client";
-import {API_ENDPOINT} from "../../lib/config";
 import prisma from "../../lib/prisma";
-import React, {FormEvent, useState} from "react";
+import React, {useState} from "react";
 import QRCode from "react-qr-code";
 
 export async function getServerSideProps(context: any) {
