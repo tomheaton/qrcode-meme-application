@@ -4,7 +4,7 @@ import Head from "next/head";
 import {Meme, User} from "@prisma/client";
 import {API_ENDPOINT} from "../../lib/config";
 import prisma from "../../lib/prisma";
-import {FormEvent, useState} from "react";
+import React, {FormEvent, useState} from "react";
 import QRCode from "react-qr-code";
 
 export async function getServerSideProps(context: any) {
@@ -48,17 +48,18 @@ const ProfilePage: NextPage<Props> = (props) => {
     const [selectedMeme, setSelectedMeme] = useState<number>(1);
     const [customUrl, setCustomUrl] = useState<string | null>(props.user ? props.user.custom : "");
 
-    const handleSubmit = async (e: FormEvent) => {
+    const handleSubmit = async (e: React.SyntheticEvent) => {
         e.preventDefault();
-        await handleSave();
-    }
-
-    // TODO: handle errors.
-    const handleSave = async () => {
-        const result = await fetch(`${API_ENDPOINT}/users/${username}`, {
-            method: "PUT",
-            body: JSON.stringify({ method: method, selectedMeme: selectedMeme, customUrl: customUrl })
-        });
+        try {
+            await fetch(`/api/users/${username}`, {
+                method: "PUT",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ method, selectedMeme, customUrl })
+            });
+        } catch (error) {
+            console.log("error:", error)
+            throw error;
+        }
     }
 
     const handleDownload = () => {
