@@ -51,7 +51,7 @@ const ProfilePage: NextPage<Props> = (props) => {
     const handleSubmit = async (e: React.SyntheticEvent) => {
         e.preventDefault();
         try {
-            await fetch(`${API_ENDPOINT}/users/${username}`, {
+            await fetch(`/api/users/${username}`, {
                 method: "PUT",
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ method, selectedMeme, customUrl })
