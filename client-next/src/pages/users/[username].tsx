@@ -5,6 +5,7 @@ import {Meme, User} from "@prisma/client";
 import prisma from "../../lib/prisma";
 import React, {useState} from "react";
 import QRCode from "react-qr-code";
+import {API_ENDPOINT} from "../../lib/config";
 
 export async function getServerSideProps(context: any) {
     try {
@@ -50,7 +51,7 @@ const ProfilePage: NextPage<Props> = (props) => {
     const handleSubmit = async (e: React.SyntheticEvent) => {
         e.preventDefault();
         try {
-            await fetch(`/api/users/${username}`, {
+            await fetch(`${API_ENDPOINT}/users/${username}`, {
                 method: "PUT",
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ method, selectedMeme, customUrl })
