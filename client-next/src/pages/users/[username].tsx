@@ -2,14 +2,13 @@ import {useRouter} from "next/router";
 import {NextPage} from "next";
 import Head from "next/head";
 import {Meme, User} from "@prisma/client";
-import prisma from "../../lib/prisma";
 import React, {useState} from "react";
 import QRCode from "react-qr-code";
-import {API_ENDPOINT} from "../../lib/config";
+import prisma from "../../lib/prisma";
 
 export async function getServerSideProps(context: any) {
     try {
-        //const result = await fetch(`${API_ENDPOINT}/users/${context.query.username}`);
+        //const result = await fetch(`/api/users/${context.query.username}`);
         const result = await prisma.user.findUnique({
             where: {
                 username: context.query.username
@@ -21,7 +20,7 @@ export async function getServerSideProps(context: any) {
 
         return {
             props: {
-                /*user: await result.json()*/
+                //user: await result.json()
                 user: JSON.parse(JSON.stringify(result))
             }
         };
