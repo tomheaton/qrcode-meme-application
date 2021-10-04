@@ -1,20 +1,17 @@
 import type {NextApiRequest, NextApiResponse} from 'next';
 import prisma from "../../lib/prisma";
 
-type Data = {
-    data: any
-}
+type Data = { username: string }[] | null
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
-    let result;
-    result = await prisma.user.findMany({
+    const result = await prisma.user.findMany({
         select: {
             username: true
         }
     });
 
-    res.status(200).json({ data: result });
+    res.status(200).json(result);
 }
 
 export default handler;
