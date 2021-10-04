@@ -1,12 +1,12 @@
 import {useRouter} from "next/router";
-import {NextPage} from "next";
+import {GetServerSideProps, NextPage} from "next";
 import Head from "next/head";
 import {Meme, User} from "@prisma/client";
 import React, {useState} from "react";
 import QRCode from "react-qr-code";
 import prisma from "../../lib/prisma";
 
-export async function getServerSideProps(context: any) {
+export const getServerSideProps: GetServerSideProps = async (context: any) => {
     try {
         //const result = await fetch(`/api/users/${context.query.username}`);
         const result = await prisma.user.findUnique({
