@@ -10,8 +10,8 @@
     "start": "next start",
     "lint": "next lint",
     "generate": "prisma generate",
-    "vercel-build": "prisma generate && prisma migrate deploy && next build",
-    "dev-test": "prisma generate && next build",
+    "vercel-build": "prisma generate && next build",
+    "dev-test": "prisma generate && prisma migrate deploy && next build",
     "prisma:generate": "prisma generate"
   },
   "dependencies": {
