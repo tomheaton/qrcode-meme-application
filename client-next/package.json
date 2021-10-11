@@ -15,7 +15,6 @@
     "prisma:generate": "prisma generate"
   },
   "dependencies": {
-    "@next-auth/prisma-adapter": "^0.5.2-next.15",
     "@prisma/client": "^3.2.1",
     "axios": "^0.21.4",
     "next": "11.1.2",
