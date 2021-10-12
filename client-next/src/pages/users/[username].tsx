@@ -147,7 +147,7 @@ const ProfilePage: NextPage<Props> = (props) => {
                                     </div>
                                 </div>
                             </div>
-                            { props.user && props.user.memes && method==="selected" && (
+                            { props.user && props.user.memes && props.user.memes.length > 0 && method==="selected" && (
                                 <div className="md:flex md:items-center mb-6">
                                     <div className="md:w-1/3">
                                         <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" htmlFor="inline-full-name">
@@ -170,6 +170,11 @@ const ProfilePage: NextPage<Props> = (props) => {
                                     </div>
                                 </div>
                             )}
+                            { props.user && props.user.memes && props.user.memes.length === 0 && method==="selected" && (
+                                <p className={"m-3"}>no memes found</p>
+                            )
+
+                            }
                             { method==="custom" && (
                                 <div className="md:flex md:items-center mb-6">
                                     <div className="md:w-1/3">
