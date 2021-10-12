@@ -7,24 +7,24 @@ generator client {
     provider = "prisma-client-js"
 }
 
-model User {
-    id        Int      @id @default(autoincrement())
-    username  String   @unique
-    email     String?  @unique
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-    memes     Meme[]
-    selected  Int      @default(1)
-    method    String   @default("random")
-    snapchat  String?
-    website   String?
-    custom    String?
-}
-
 model Meme {
     id       Int    @id @default(autoincrement())
     name     String
     link     String
     author   User?  @relation(fields: [authorId], references: [id])
     authorId Int?
+}
+
+model User {
+    id        Int      @id @default(autoincrement())
+    username  String   @unique
+    email     String?  @unique
+    createdAt DateTime @default(now()) @map(name: "created_at")
+    updatedAt DateTime @updatedAt @map(name: "updated_at")
+    memes     Meme[]
+    selected  Int      @default(1)
+    method    String   @default("random")
+    snapchat  String?
+    website   String?
+    custom    String?
 }
