@@ -23,11 +23,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                 res.redirect(result.website ? result.website : "https://qrcode.tomheaton.dev");
                 break;
             case "custom":
-                res.redirect(result.custom ? result.custom : "https://qrcode.tomheaton.dev");
+                /*res.redirect(result.custom ? result.custom : "https://qrcode.tomheaton.dev");*/
+                // TODO: remove after elections xD
+                res.redirect(result.custom ? result.custom : "https://www.thesubath.com/elections/vote/1647/");
                 break;
             case "selected":
-                const selected = result.memes.filter((o) => o.id === result.selected)
-                res.redirect(selected[0].link);
+                let selected = await result.memes.filter((meme) => meme.id ==result.selected)
+                res.redirect(selected && selected.length > 0 ? selected[0].link : "https://qrcode.tomheaton.dev");
                 break;
             case "random":
                 res.redirect(result.memes[Math.floor(Math.random() * result.memes.length)].link);

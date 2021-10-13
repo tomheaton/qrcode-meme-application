@@ -47,12 +47,23 @@ const ProfilePage: NextPage<Props> = (props) => {
     const [selectedMeme, setSelectedMeme] = useState<number>(1);
     const [customUrl, setCustomUrl] = useState<string | null>(props.user ? props.user.custom : "");
 
+    // TODO: fix this xD
+    const setId = (e: any) => {
+        e.preventDefault();
+        const selector = document.getElementById("meme-selector");
+        // @ts-ignore
+        const chosenMemeId = selector ? selector.options[selector.selectedIndex].key : 8;
+        setSelectedMeme(chosenMemeId)
+    }
+
     const handleSubmit = async (e: React.SyntheticEvent) => {
         e.preventDefault();
+
         try {
             await fetch(`/api/users/${username}`, {
                 method: "PUT",
                 headers: { 'Content-Type': 'application/json' },
+                /*body: JSON.stringify({ method, selectedMeme, customUrl })*/
                 body: JSON.stringify({ method, selectedMeme, customUrl })
             });
         } catch (error) {
@@ -155,10 +166,11 @@ const ProfilePage: NextPage<Props> = (props) => {
                                         </label>
                                     </div>
                                     <div className="md:w-2/3 inline-block relative">
-                                        <select onChange={(e) => {setSelectedMeme(e.target.selectedIndex+1)}} className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+                                        <p>Selected Meme: {selectedMeme}</p>
+                                        <select id={"meme-selector"} onChange={(e) => {setSelectedMeme(e.target.selectedIndex+1)}} className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
                                             {
                                                 props.user.memes.map((element: Meme) => {
-                                                    return (<option key={element.id} value={element.id}>{element.name}</option>);
+                                                    return (<option key={element.id} value={element.id}>{element.name} - {element.id}</option>);
                                                 })
                                             }
                                         </select>

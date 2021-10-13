@@ -13,6 +13,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
             author: {
                 username: username
             }
+        },
+        orderBy: {
+            id: "desc"
         }
     })
 
