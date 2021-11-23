@@ -40,6 +40,26 @@ export const data = {
             id: 6,
             name: "six-consoles",
             link: "https://youtu.be/RuERcyUwpZk?t=10"
+        },
+        {
+            id: 7,
+            name: "inevitable",
+            link: "https://youtu.be/_anDMGmck-k?t=33"
+        },
+        {
+            id: 8,
+            name: "russian-hardbass",
+            link: "https://youtu.be/QiFBgtgUtfw?t=16"
+        },
+        {
+            id: 9,
+            name: "shia-doit",
+            link: "https://youtu.be/ZXsQAXx_ao0?t=3"
+        },
+        {
+            id: 10,
+            name: "hello-there",
+            link: "https://youtu.be/rEq1Z0bjdwc?t=8"
         }
     ]
 }
