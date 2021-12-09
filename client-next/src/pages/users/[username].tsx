@@ -1,7 +1,7 @@
 import {useRouter} from "next/router";
 import {GetServerSideProps, NextPage} from "next";
 import Head from "next/head";
-import {Meme, User} from "@prisma/client";
+import type {Meme, User} from "@prisma/client";
 import React, {useState} from "react";
 import QRCode from "react-qr-code";
 import prisma from "../../lib/prisma";
