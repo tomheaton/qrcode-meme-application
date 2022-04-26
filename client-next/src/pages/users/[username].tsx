@@ -4,7 +4,7 @@ import Head from "next/head";
 import type {Meme, User} from "@prisma/client";
 import React, {useState} from "react";
 import QRCode from "react-qr-code";
-import prisma from "../../lib/prisma";
+import prisma from "@lib/prisma";
 
 export const getServerSideProps: GetServerSideProps = async (context: any) => {
     try {
