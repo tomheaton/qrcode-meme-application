@@ -27,7 +27,7 @@ const Login: NextPage = () => {
         <div className="flex flex-col items-center min-h-screen py-2 pt-10">
             <Head>
                 <title>Register | QR Code Application</title>
-                <link rel="icon" href="/favicon.ico" />
+                <link rel={"icon"} href={"/favicon.ico"} />
             </Head>
 
             <h1 className={"font-bold text-5xl"}>Register</h1>

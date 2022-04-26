@@ -1,6 +1,6 @@
-import type {NextApiRequest, NextApiResponse} from 'next';
+import {NextApiRequest, NextApiResponse} from 'next';
 import prisma from "@lib/prisma";
-import type {Meme} from "@prisma/client";
+import {Meme} from "@prisma/client";
 
 type Data = Meme[] | null
 

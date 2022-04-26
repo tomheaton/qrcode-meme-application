@@ -1,6 +1,6 @@
-import type {NextApiRequest, NextApiResponse} from 'next';
+import {NextApiRequest, NextApiResponse} from 'next';
 import prisma from "@lib/prisma";
-import type {User} from "@prisma/client";
+import {User} from "@prisma/client";
 
 type Data = User | null;
 

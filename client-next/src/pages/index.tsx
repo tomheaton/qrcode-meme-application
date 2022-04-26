@@ -1,4 +1,4 @@
-import type {NextPage} from 'next';
+import {NextPage} from 'next';
 import Head from 'next/head';
 import {useRouter} from "next/router";
 import {FormEvent, useState} from "react";
@@ -17,7 +17,7 @@ const Home: NextPage = () => {
         <div className="flex flex-col items-center justify-center min-h-screen py-2">
             <Head>
                 <title>QR Code Application</title>
-                <link rel="icon" href="/favicon.ico" />
+                <link rel={"icon"} href={"/favicon.ico"} />
             </Head>
 
             <main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">

@@ -1,4 +1,4 @@
-import type {NextApiRequest, NextApiResponse} from 'next';
+import {NextApiRequest, NextApiResponse} from 'next';
 import prisma from "@lib/prisma";
 
 type Data = { username: string }[] | null
