@@ -22,7 +22,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
                     method: true
                 }
             });
-            return res.status(200).json({ message: "data here", success: true, data: memeMethod });
+
+            console.log(JSON.stringify({ memeMethod }, null, 4));
+
+            // if (memeMethod !== null) {
+            //     return res.status(200).json({ message: "found meme method", success: true, data: MemeMethod[memeMethod] });
+            // }
+            return res.status(200).json({ message: "did not find meme method", success: false });
         case ('PUT'):
             /*
             if (["random", "selected", "custom", "website", "snapchat"].includes(newMode)) {
