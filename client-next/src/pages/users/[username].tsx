@@ -1,7 +1,7 @@
 import {useRouter} from "next/router";
 import {GetServerSideProps, NextPage} from "next";
 import Head from "next/head";
-import {Meme, User} from "@prisma/client";
+import {Meme, MemeMethod, User} from "@prisma/client";
 import React, {useState} from "react";
 import QRCode from "react-qr-code";
 import prisma from "@lib/prisma";
@@ -42,7 +42,7 @@ const ProfilePage: NextPage<Props> = (props) => {
     const router = useRouter();
     const username = router.query.username;
 
-    const [method, setMethod] = useState<string>();
+    const [method, setMethod] = useState<MemeMethod>();
     const [tab, setTab] = useState<string>("qrcode");
     const [selectedMeme, setSelectedMeme] = useState<number>(1);
     const [customUrl, setCustomUrl] = useState<string | null>(props.user ? props.user.custom : "");
@@ -146,23 +146,17 @@ const ProfilePage: NextPage<Props> = (props) => {
                                     </label>
                                 </div>
                                 <div className={"md:w-2/3 inline-block relative"}>
-                                    <select value={method} onChange={(e) => {setMethod(e.target.value)}}
-                                            className={"block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"}>
-                                        <option value={"random"}>
-                                            Random Meme
-                                        </option>
-                                        <option value={"selected"}>
-                                            Selected Meme
-                                        </option>
-                                        <option value={"website"}>
-                                            Website
-                                        </option>
-                                        <option value={"snapchat"}>
-                                            Snapchat
-                                        </option>
-                                        <option value={"custom"}>
-                                            Custom
-                                        </option>
+                                    <select value={method}
+                                            onChange={(e) => {setMethod((e.target.value as keyof typeof MemeMethod))}}
+                                            className={"block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"}
+                                    >
+                                        {(Object.keys(MemeMethod) as Array<keyof typeof MemeMethod>).map((memeMethod: MemeMethod, index: number) => {
+                                            return (
+                                                <option value={memeMethod} key={index} id={memeMethod} style={{textTransform: "capitalize"}}>
+                                                    {memeMethod.toLowerCase()}
+                                                </option>
+                                            );
+                                        })}
                                     </select>
                                     <div className={"pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"}>
                                         <svg className={"fill-current h-4 w-4"} xmlns={"http://www.w3.org/2000/svg"} viewBox={"0 0 20 20"}>
@@ -171,21 +165,21 @@ const ProfilePage: NextPage<Props> = (props) => {
                                     </div>
                                 </div>
                             </div>
-                            { props.user && props.user.memes && props.user.memes.length > 0 && method==="selected" && (
+                            { props.user && props.user.memes && props.user.memes.length > 0 && method === MemeMethod.SELECTED && (
                                 <div className={"md:flex md:items-center mb-6"}>
                                     <div className={"md:w-1/3"}>
-                                        <label className={"block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"} htmlFor={"inline-full-name"}>
+                                        <label htmlFor={"meme-selector"} className={"block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"}>
                                             Meme
                                         </label>
                                     </div>
                                     <div className={"md:w-2/3 inline-block relative"}>
                                         <p>Selected Meme: {selectedMeme}</p>
                                         <select id={"meme-selector"} onChange={(e) => {setSelectedMeme(e.target.selectedIndex+1)}} className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
-                                            {
-                                                props.user.memes.map((element: Meme) => {
-                                                    return (<option key={element.id} value={element.id}>{element.name} - {element.id}</option>);
-                                                })
-                                            }
+                                            { props.user.memes.map((element: Meme) => {
+                                                return (
+                                                    <option key={element.id} value={element.id}>{element.name} - {element.id}</option>
+                                                );
+                                            })}
                                         </select>
                                         <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                                             <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -195,24 +189,25 @@ const ProfilePage: NextPage<Props> = (props) => {
                                     </div>
                                 </div>
                             )}
-                            { props.user && props.user.memes && props.user.memes.length === 0 && method === "selected" && (
+                            { props.user && props.user.memes && props.user.memes.length === 0 && method === MemeMethod.SELECTED && (
                                 <p className={"m-3"}>
                                     no memes found
                                 </p>
                             )}
-                            { method === "custom" && (
+                            { method === MemeMethod.CUSTOM && (
                                 <div className={"md:flex md:items-center mb-6"}>
                                     <div className={"md:w-1/3"}>
-                                        <label className={"block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"} htmlFor={"inline-full-name"}>
+                                        <label htmlFor={"customUrl"} className={"block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"}>
                                             Meme
                                         </label>
                                     </div>
                                     <div className={"md:w-2/3"}>
                                         <input onChange={(e) => {setCustomUrl(e.target.value)}}
-                                               className={"bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"}
-                                               id={"inline-url"}
+                                               id={"customUrl"}
+                                               name={"customUrl"}
                                                type={"url"}
                                                placeholder={"Enter URL"}
+                                               className={"bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"}
                                         />
                                     </div>
                                 </div>
@@ -227,7 +222,9 @@ const ProfilePage: NextPage<Props> = (props) => {
                 )}
                 { tab === "other" && (
                     <div className={"p-10"}>
-                        <h3 className={"font-bold text-2xl"}>other</h3>
+                        <h3 className={"font-bold text-2xl"}>
+                            other
+                        </h3>
                     </div>
                 )}
             </div>
