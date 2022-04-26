@@ -12,3 +12,7 @@ const config: SWRConfiguration = {
 export const useUser = () => {
     return useSWR<any>("/api/auth/@me", fetcher, config);
 }
+
+export const useMemes = () => {
+    return useSWR<any>("/api/users/memes", fetcher, config);
+}

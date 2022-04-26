@@ -7,7 +7,7 @@ const nextConfig = {
             [
                 {
                     source: "/tomheaton",
-                    destination: "api/qrcode/tomheaton",
+                    destination: "/api/qrcode/tomheaton",
                     permanent: true
                 }
             ]

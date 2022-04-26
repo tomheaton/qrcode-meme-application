@@ -53,7 +53,7 @@ const Login: NextPage = () => {
                 <link rel={"icon"} href={"/favicon.ico"} />
             </Head>
 
-            <h1 className={"font-bold text-5xl"}>
+            <h1 className={"font-bold text-5xl mb-4"}>
                 Login
             </h1>
 
