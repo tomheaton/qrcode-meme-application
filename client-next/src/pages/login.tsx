@@ -3,6 +3,7 @@ import {useRouter} from "next/router";
 import React, {SyntheticEvent, useState} from "react";
 import Head from "next/head";
 import {toast} from "react-hot-toast";
+import {ClipLoader} from "react-spinners";
 
 const Login: NextPage = () => {
 
@@ -71,6 +72,9 @@ const Login: NextPage = () => {
                                name={"username"}
                                type={"text"}
                                placeholder={"enter username"}
+                               required={true}
+                               min={1}
+                               max={255}
                                className={"bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"}
                         />
                     </div>
@@ -87,6 +91,9 @@ const Login: NextPage = () => {
                                name={"password"}
                                type={"password"}
                                placeholder={"••••••••••••••"}
+                               required={true}
+                               min={12}
+                               max={255}
                                className={"bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"}
                         />
                     </div>
@@ -96,7 +103,7 @@ const Login: NextPage = () => {
 
                 <div className={"flex items-center justify-center"}>
                     <button type={"submit"} form={"login-form"} className={"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"}>
-                        Login
+                        { isSubmitting ? (<ClipLoader color={"white"} size={20} />) : ("Login") }
                     </button>
                 </div>
             </form>

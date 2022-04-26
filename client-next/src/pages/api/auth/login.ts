@@ -18,6 +18,16 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
 
     console.log(`login data received: ${JSON.stringify({ username, password })}`);
 
+    if (!username || !password) {
+        return res.status(401).json({ message: "missing username/password", success: false });
+    }
+    if (username.length < 1 || username.length > 255 ) {
+        return res.status(401).json({ message: "invalid username length", success: false });
+    }
+    if (password.length < 12 || password.length > 255 ) {
+        return res.status(401).json({ message: "invalid password length", success: false });
+    }
+
     const user = await prisma.user.findUnique({
         where: {
             username: username
