@@ -1,18 +1,20 @@
 import {NextApiRequest, NextApiResponse} from 'next';
 import prisma from "@lib/prisma";
+import {MemeMethod} from "@prisma/client";
 
 type Data = {
-    data: any
+    message: string
+    success: boolean
+    data?: MemeMethod
 }
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
-    const _method = req.method;
     const { username } = req.query as { username: string };
 
-    switch (_method) {
-        case 'GET':
-            const result = await prisma.user.findUnique({
+    switch (req.method) {
+        case ('GET'):
+            const memeMethod = await prisma.user.findUnique({
                 where: {
                     username: username
                 },
@@ -20,9 +22,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
                     method: true
                 }
             });
-            res.status(200).json({ data: result });
-            break;
-        case 'PUT':
+            return res.status(200).json({ message: "data here", success: true, data: memeMethod });
+        case ('PUT'):
             /*
             if (["random", "selected", "custom", "website", "snapchat"].includes(newMode)) {
                 data.mode = newMode;
@@ -31,8 +32,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
             break;
         default:
             res.setHeader('Allow', ['GET', 'PUT']);
-            res.status(405).end(`Method ${_method} Not Allowed`);
-            break;
+            return res.status(405).end(`Method ${req.method} Not Allowed`);
     }
 }
 

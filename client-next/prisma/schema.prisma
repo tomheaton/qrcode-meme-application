@@ -18,12 +18,19 @@ model Meme {
 model User {
     id        Int      @id @default(autoincrement())
     username  String   @unique
-    email     String?  @unique
     password  String
     memes     Meme[]
     selected  Int      @default(1)
-    method    String   @default("random")
+    method    MemeMethod   @default(RANDOM)
     snapchat  String?
     website   String?
     custom    String?
+}
+
+enum MemeMethod {
+    RANDOM
+    SELECTED
+    CUSTOM
+    WEBSITE
+    SNAPCHAT
 }

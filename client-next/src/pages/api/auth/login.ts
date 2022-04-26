@@ -14,22 +14,22 @@ type Data = {
 
 const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
-    const { email, password, rememberMe } = req.body as { email: string, password: string, rememberMe: boolean };
+    const { username, password } = req.body as { username: string, password: string };
 
-    console.log(`login data received: ${JSON.stringify({ email, password, rememberMe })}`);
+    console.log(`login data received: ${JSON.stringify({ username, password })}`);
 
     const user = await prisma.user.findUnique({
         where: {
-            email: email
+            username: username
         }
     });
 
     if (!user) {
-        console.log("no user found with that email");
-        return res.status(401).json({ message: "invalid email", success: false });
+        console.log("no user found with that username");
+        return res.status(401).json({ message: "invalid username", success: false });
     }
 
-    console.log(`user: ${user.email}`);
+    console.log(`user: ${user.username}`);
 
     const passwordsMatch: boolean = await compare(password, user.password);
 

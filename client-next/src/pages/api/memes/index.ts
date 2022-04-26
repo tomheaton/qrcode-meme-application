@@ -2,7 +2,9 @@ import {NextApiRequest, NextApiResponse} from 'next';
 import prisma from "@lib/prisma";
 import {Meme} from "@prisma/client";
 
-type Data = Meme[] | null
+type Data = {
+
+}
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
