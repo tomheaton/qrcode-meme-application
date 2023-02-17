@@ -1,10 +1,9 @@
-import {NextPage} from "next";
+import type {NextPage} from "next";
 import Head from "next/head";
 import React from "react";
 import Image from "next/image";
 
 const Information: NextPage = () => {
-
     return (
         <div className={"flex flex-col justify-center items-center min-h-screen py-2 pt-10"}>
             <Head>

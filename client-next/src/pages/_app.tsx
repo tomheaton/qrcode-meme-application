@@ -1,12 +1,11 @@
 import '@styles/globals.css';
-import {AppProps} from 'next/app';
+import type {AppProps} from 'next/app';
 import {Toaster} from "react-hot-toast";
 
 const App = ({Component, pageProps}: AppProps) => {
-
     return (
         <>
-            <Toaster />
+            <Toaster/>
             <Component {...pageProps} />
         </>
     );

@@ -4,7 +4,6 @@ import {useRouter} from "next/router";
 import {FormEvent, useState} from "react";
 
 const Index: NextPage = () => {
-
     const router = useRouter();
     const [username, setUsername] = useState<string>("");
 
