@@ -3,10 +3,10 @@ import Head from "next/head";
 import {useRouter} from "next/router";
 import {useMemes, useUser} from "@lib/hooks";
 import {ClipLoader} from "react-spinners";
-import React, {type SyntheticEvent, useState} from "react";
+import React, {SyntheticEvent, useState} from "react";
 import {toast} from "react-hot-toast";
 import QRCode from "react-qr-code";
-import {type Meme, MemeMethod} from "@prisma/client";
+import {Meme, MemeMethod} from "@prisma/client";
 
 const Profile: NextPage = () => {
 

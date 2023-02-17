@@ -1,5 +1,5 @@
 import type {NextPage} from "next";
-import React, {type SyntheticEvent, useState} from "react";
+import React, {SyntheticEvent, useState} from "react";
 import Head from "next/head";
 import {useRouter} from "next/router";
 import {toast} from "react-hot-toast";

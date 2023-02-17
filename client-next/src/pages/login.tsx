@@ -1,6 +1,6 @@
 import type {NextPage} from "next";
 import {useRouter} from "next/router";
-import React, {type SyntheticEvent, useState} from "react";
+import React, {SyntheticEvent, useState} from "react";
 import Head from "next/head";
 import {toast} from "react-hot-toast";
 import {ClipLoader} from "react-spinners";
