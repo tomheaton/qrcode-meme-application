@@ -1,4 +1,4 @@
-import {NextApiRequest, NextApiResponse} from "next";
+import type {NextApiRequest, NextApiResponse} from "next";
 import {verify} from "jsonwebtoken";
 import prisma from "@lib/prisma";
 import {QRCODE_TOKEN} from "@lib/consts";

@@ -1,4 +1,4 @@
-import useSWR, {SWRConfiguration} from 'swr';
+import useSWR, {type SWRConfiguration} from 'swr';
 
 // @ts-ignore
 const fetcher = (...args) => fetch(...args).then(res => res.json());
