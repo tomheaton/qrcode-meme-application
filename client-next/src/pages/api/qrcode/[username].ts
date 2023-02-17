@@ -1,11 +1,13 @@
 import {NextApiRequest, NextApiResponse} from 'next';
-import prisma from "@lib/prisma";
-import {QRCODE_LINK} from "@lib/consts";
-import {MemeMethod} from "@prisma/client";
+// import prisma from "@lib/prisma";
+// import {QRCODE_LINK} from "@lib/consts";
+// import {MemeMethod} from "@prisma/client";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+    // TODO: fix database
+    return res.redirect("https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley");
 
-    const { username } = req.query as { username: string };
+    /*const { username } = req.query as { username: string };
 
     const result = await prisma.user.findUnique({
         where: {
@@ -35,7 +37,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     // unlikely, but oh well...
-    return res.status(404).end("Method Not Found");
+    return res.status(404).end("Method Not Found");*/
 }
 
 export default handler;
