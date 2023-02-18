@@ -60,7 +60,6 @@ const Login: NextPage = () => {
 
             <br/>
 
-            { /* you are a fucking dickhead LOOOOOOOOOOOOOOOOOOL */}
             <form onSubmit={handleSubmit} id={"register-form"} className={"w-full max-w-sm md:w-80"}>
                 <div className={"md:flex md:items-center mb-6"}>
                     <div className={"md:w-1/3"}>
