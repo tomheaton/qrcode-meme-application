@@ -27,7 +27,7 @@ const Login: NextPage = () => {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ username, password })
+                body: JSON.stringify({username, password})
             });
 
             const json = await response.json();
@@ -51,7 +51,7 @@ const Login: NextPage = () => {
         <div className={"flex flex-col items-center min-h-screen py-2 pt-10"}>
             <Head>
                 <title>Register | QR Code Application</title>
-                <link rel={"icon"} href={"/favicon.ico"} />
+                <link rel={"icon"} href={"/favicon.ico"}/>
             </Head>
 
             <h1 className={"font-bold text-5xl mb-4"}>
@@ -63,12 +63,15 @@ const Login: NextPage = () => {
             <form onSubmit={handleSubmit} id={"register-form"} className={"w-full max-w-sm md:w-80"}>
                 <div className={"md:flex md:items-center mb-6"}>
                     <div className={"md:w-1/3"}>
-                        <label htmlFor={"username"} className={"block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"}>
+                        <label htmlFor={"username"}
+                               className={"block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"}>
                             Username
                         </label>
                     </div>
                     <div className={"md:w-2/3"}>
-                        <input onChange={(e) => {setUsername(e.target.value)}}
+                        <input onChange={(e) => {
+                            setUsername(e.target.value)
+                        }}
                                id={"username"}
                                name={"username"}
                                type={"text"}
@@ -82,12 +85,15 @@ const Login: NextPage = () => {
                 </div>
                 <div className={"md:flex md:items-center mb-6"}>
                     <div className={"md:w-1/3"}>
-                        <label htmlFor={"password"} className={"block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"}>
+                        <label htmlFor={"password"}
+                               className={"block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"}>
                             Password
                         </label>
                     </div>
                     <div className={"md:w-2/3"}>
-                        <input onChange={(e) => {setPassword(e.target.value)}}
+                        <input onChange={(e) => {
+                            setPassword(e.target.value)
+                        }}
                                id={"password"}
                                name={"password"}
                                type={"password"}
@@ -103,8 +109,9 @@ const Login: NextPage = () => {
                 <br/>
 
                 <div className={"flex items-center justify-center"}>
-                    <button type={"submit"} form={"register-form"} className={"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"}>
-                        { isSubmitting ? (<ClipLoader color={"white"} size={20} />) : ("Register") }
+                    <button type={"submit"} form={"register-form"}
+                            className={"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"}>
+                        {isSubmitting ? (<ClipLoader color={"white"} size={20}/>) : ("Register")}
                     </button>
                 </div>
             </form>

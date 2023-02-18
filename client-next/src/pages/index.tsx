@@ -5,6 +5,7 @@ import {FormEvent, useState} from "react";
 
 const Index: NextPage = () => {
     const router = useRouter();
+
     const [username, setUsername] = useState<string>("");
 
     const handleSubmit = async (e: FormEvent) => {
@@ -16,7 +17,7 @@ const Index: NextPage = () => {
         <div className={"flex flex-col items-center justify-center min-h-screen py-2"}>
             <Head>
                 <title>QR Code Application</title>
-                <link rel={"icon"} href={"/favicon.ico"} />
+                <link rel={"icon"} href={"/favicon.ico"}/>
             </Head>
 
             <main className={"flex flex-col items-center justify-center w-full flex-1 px-20 text-center"}>
@@ -33,16 +34,20 @@ const Index: NextPage = () => {
                     <br/>👇{/*⤵*/}️️
                 </p>
                 <br/>
-                <div onSubmit={handleSubmit} className={"flex flex-wrap items-center justify-around max-w-4xl mt-6 sm:w-full"}>
+                <div onSubmit={handleSubmit}
+                     className={"flex flex-wrap items-center justify-around max-w-4xl mt-6 sm:w-full"}>
                     <form className="w-full max-w-sm">
                         <div className="md:flex md:items-center mb-6">
                             <div className="md:w-1/3">
-                                <label className={"block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"} htmlFor={"inline-username"}>
+                                <label className={"block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"}
+                                       htmlFor={"inline-username"}>
                                     Username
                                 </label>
                             </div>
                             <div className="md:w-2/3">
-                                <input onChange={(e) => {setUsername(e.target.value)}}
+                                <input onChange={(e) => {
+                                    setUsername(e.target.value)
+                                }}
                                        className={"bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"}
                                        id={"inline-username"}
                                        type={"text"}
@@ -63,7 +68,8 @@ const Index: NextPage = () => {
             </main>
 
             <footer className={"flex items-center justify-center w-full h-24 border-t"}>
-                <a className={"flex items-center justify-center"} href={"https://tomheaton.dev/"} target={"_blank"} rel={"noopener noreferrer"}>
+                <a className={"flex items-center justify-center"} href={"https://tomheaton.dev/"} target={"_blank"}
+                   rel={"noopener noreferrer"}>
                     Developed by Tom Heaton
                 </a>
             </footer>

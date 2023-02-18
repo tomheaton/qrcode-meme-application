@@ -9,7 +9,6 @@ type Data = {
 }
 
 export const applyCookieMiddleware = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
-
     const token = req.cookies[`${QRCODE_TOKEN}`];
 
     if (!token) {
@@ -29,7 +28,7 @@ export const applyCookieMiddleware = async (req: NextApiRequest, res: NextApiRes
     console.log(`token verified`);
     console.log(userFromToken)
 
-    return await prisma.user.findUnique({
+    return prisma.user.findUnique({
         where: {
             id: Number(userFromToken.sub) || -1
         }

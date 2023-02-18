@@ -1,12 +1,13 @@
 # qrcode-meme-application
 
-## Client
-A simple React webapp that allows use of `REST` API to upload, set, and manage stores memes.
+## `client-next`
+The new Next.js frontend.
 
-## Client-Next
-The Next.js frontend.
+## `client-old`
 
-## Server
+The old React frontend that allows use of `REST` API to upload, set, and manage stored memes.
+
+## `server`
 A simple Node server that serves a `REST` API that can be interacted with using the client.
 
 ## Todo
